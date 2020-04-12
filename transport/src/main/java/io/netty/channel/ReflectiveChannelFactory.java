@@ -24,6 +24,7 @@ import java.lang.reflect.Constructor;
 /**
  * A {@link ChannelFactory} that instantiates a new {@link Channel} by invoking its default constructor reflectively.
  */
+// wtt 泛型 + 反射 + 工厂实现IO模式的切换
 public class ReflectiveChannelFactory<T extends Channel> implements ChannelFactory<T> {
 
     private final Constructor<? extends T> constructor;
@@ -31,6 +32,7 @@ public class ReflectiveChannelFactory<T extends Channel> implements ChannelFacto
     public ReflectiveChannelFactory(Class<? extends T> clazz) {
         ObjectUtil.checkNotNull(clazz, "clazz");
         try {
+            // wtt 获取无参构造器
             this.constructor = clazz.getConstructor();
         } catch (NoSuchMethodException e) {
             throw new IllegalArgumentException("Class " + StringUtil.simpleClassName(clazz) +
@@ -41,6 +43,7 @@ public class ReflectiveChannelFactory<T extends Channel> implements ChannelFacto
     @Override
     public T newChannel() {
         try {
+            // wtt 反射创建channel
             return constructor.newInstance();
         } catch (Throwable t) {
             throw new ChannelException("Unable to create Channel from class " + constructor.getDeclaringClass(), t);
