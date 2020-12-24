@@ -22,12 +22,17 @@ import io.netty.util.internal.StringUtil;
 import java.lang.reflect.Constructor;
 
 /**
+ * 泛型 + 反射 + 工厂实现IO模式的切换
  * A {@link ChannelFactory} that instantiates a new {@link Channel} by invoking its default constructor reflectively.
  */
 public class ReflectiveChannelFactory<T extends Channel> implements ChannelFactory<T> {
 
     private final Constructor<? extends T> constructor;
 
+    /**
+     *
+     * @param clazz Class<? extends T> 这种写法意思是T的子类都可以，不限定必须是ReflectiveChannelFactory<T>中的T。
+     */
     public ReflectiveChannelFactory(Class<? extends T> clazz) {
         ObjectUtil.checkNotNull(clazz, "clazz");
         try {

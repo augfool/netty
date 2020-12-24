@@ -442,6 +442,7 @@ public final class NioEventLoop extends SingleThreadEventLoop {
     }
 
     @Override
+    // 死循环监听、处理事件，Reactor模式
     protected void run() {
         for (;;) {
             try {

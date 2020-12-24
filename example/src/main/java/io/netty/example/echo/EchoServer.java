@@ -49,12 +49,18 @@ public final class EchoServer {
         }
 
         // Configure the server.
+        /**
+         * 开发模式，Reactor模式
+         */
+        // 主从Reactor main Reactor
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
+        // sub Reactor
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         final EchoServerHandler serverHandler = new EchoServerHandler();
         try {
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
+             // 不同的IO模式
              .channel(NioServerSocketChannel.class)
              .option(ChannelOption.SO_BACKLOG, 100)
              .handler(new LoggingHandler(LogLevel.INFO))
