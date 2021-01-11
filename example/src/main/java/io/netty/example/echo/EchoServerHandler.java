@@ -15,6 +15,9 @@
  */
 package io.netty.example.echo;
 
+import java.nio.charset.Charset;
+
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -26,12 +29,16 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
+    // 这个方法在接收到客户端发来的数据之后被回调
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+//        ByteBuf byteBuf = (ByteBuf) msg;
+//        System.out.println(": 客户端读到数据 -> " + byteBuf.toString(Charset.forName("utf-8")));
         ctx.write(msg);
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) {
+        // 双向通信，写给客户端
         ctx.flush();
     }
 

@@ -33,19 +33,24 @@ public class EchoClientHandler extends ChannelInboundHandlerAdapter {
      * Creates a client-side handler.
      */
     public EchoClientHandler() {
+        // 获取一个 netty 对二进制数据的抽象 ByteBuf
         firstMessage = Unpooled.buffer(EchoClient.SIZE);
         for (int i = 0; i < firstMessage.capacity(); i ++) {
+            // 将数据填充到 ByteBuf
             firstMessage.writeByte((byte) i);
         }
     }
 
     @Override
+    // 这个方法会在客户端连接建立成功之后被调用
     public void channelActive(ChannelHandlerContext ctx) {
+        // 写数据
         ctx.writeAndFlush(firstMessage);
     }
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
+        // 双向通信，再反给服务端
         ctx.write(msg);
     }
 
