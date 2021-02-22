@@ -23,6 +23,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
+ * echo 客户端来什么数据再返回去
  * Handler implementation for the echo server.
  */
 @Sharable
